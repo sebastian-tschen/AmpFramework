@@ -6,6 +6,7 @@ import gui.TubeShower;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import container.TubePicture;
@@ -13,6 +14,7 @@ import container.TubePicture;
 public class InputCollector implements Runnable {
 
 	private TubeShower shower;
+	private Object lastPicture;
 
 	// private TubeShower tube;
 	//
@@ -28,30 +30,26 @@ public class InputCollector implements Runnable {
 
 	@Override
 	public void run() {
+
+		BufferedReader reader = null;
+		reader = new BufferedReader(new InputStreamReader(
+				System.in));
 		while (true) {
 
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					System.in));
-
-			int line = null;
+			String line = null;
 			try {
-				line = reader.read();
+				line = reader.readLine();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				System.exit(1);
 			}
+			
 			if (line == null || line.equals("")) {
-				if (line == null) {
-					System.out.println("null");
-				} else {
-					System.out.println("nothing");
-				}
+				System.err.println("line =="+line);
 				continue;
 			}
-			System.out.println("found some");
 			String[] coords = line.split(";");
-
 			ArrayList<Integer> xArray = new ArrayList<Integer>();
 			ArrayList<Integer> yArray = new ArrayList<Integer>();
 			try {
@@ -65,7 +63,10 @@ public class InputCollector implements Runnable {
 				}
 
 			} catch (NumberFormatException e) {
-				// number format?? better use next line
+				System.err.println(e.getMessage());
+				continue;
+			} catch (ArrayIndexOutOfBoundsException e) {
+				System.err.println(e.getMessage());
 				continue;
 			}
 			TubePicture pic = null;
@@ -76,8 +77,11 @@ public class InputCollector implements Runnable {
 				e.printStackTrace();
 				System.exit(0);
 			}
-
-			// shower.setPicture(pic);
+			
+			if (!pic.equals(this.lastPicture)){
+				lastPicture=pic;
+				shower.setPicture(pic);
+			}
 
 		}
 

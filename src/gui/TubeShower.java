@@ -60,7 +60,6 @@ public class TubeShower implements Runnable{
 			graphics.drawArc(0, 0, 256, 256,0,360);
 			graphics.setColor(Color.green);
 			for (Coordinate coord : picture) {
-				System.out.println(coord.getX()+" "+coord.getY()+" ;");
 				graphics.drawArc(coord.getX(), coord.getY(), 3, 3, 0, 360);
 				graphics.fillArc(coord.getX(), coord.getY(), 3, 3, 0, 360);
 			}

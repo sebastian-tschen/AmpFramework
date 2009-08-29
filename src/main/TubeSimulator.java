@@ -13,7 +13,7 @@ public class TubeSimulator {
 		Thread showerThread = new Thread(shower);
 		
 		ioThread.start();
-//		showerThread.start();
+		showerThread.start();
 		
 		
 	}

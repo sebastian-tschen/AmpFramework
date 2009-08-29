@@ -1,5 +1,13 @@
 package tests;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+
+import container.TubePicture;
+import excpetions.ArraySizeDifferenceException;
 import gui.TubeShower;
 import inputOutput.InputCollector;
 
@@ -10,18 +18,31 @@ public class Tester {
 	 */
 	public static void main(String[] args) {
 
-		TubeShower shower= new TubeShower();
-		Thread ioThread=new Thread(new InputCollector(shower));
-		Thread showerThread = new Thread(shower);
+
+		run();
 		
-		ioThread.start();
-		
-		showerThread.start();
-		
-		System.out.println("started InputCollector");
-		
-		
-		
+	}
+	
+	
+	public static void run(){
+
+
+		BufferedReader reader = null;
+		reader = new BufferedReader(new InputStreamReader(
+				System.in));
+
+		while (true) {
+			String line = null;
+			try {
+				line = reader.readLine();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.exit(1);
+			}
+			System.out.println(line);
+		}
+
 	}
 
 }
