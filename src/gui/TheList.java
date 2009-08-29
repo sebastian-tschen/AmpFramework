@@ -36,20 +36,8 @@ public class TheList {
 	
 	public boolean outOfRange(Koord koord){
 		int middle = (128*size)/2;
-		double x = middle - koord.x*size;
-		/*if(middle > koord.x*size){
-			x = middle - koord.x*size;
-		}
-		else{
-			x = koord.x*size - middle;
-		}*/
-		double y = middle - koord.y*size;
-		/*if(middle > koord.y*size){
-			y = middle - koord.y*size;
-		}
-		else{
-			y = koord.y*size - middle;
-		}*/
+		double x = middle - size/2 - koord.x*size;
+		double y = middle - size/2 - koord.y*size;
 		double eins = Math.pow(x, 2);
 		double zwei = Math.pow(y, 2);
 		int test = (int) Math.sqrt(eins+zwei);

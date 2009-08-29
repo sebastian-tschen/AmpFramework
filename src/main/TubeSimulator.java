@@ -1,6 +1,7 @@
 package main;
 
 import gui.TubeShower;
+import gui.MainFrame;
 import inputOutput.InputCollector;
 
 public class TubeSimulator {
@@ -8,7 +9,7 @@ public class TubeSimulator {
 	public static void main(String[] args){
 		
 		
-		TubeShower shower= new TubeShower();
+		MainFrame shower= new MainFrame();
 		Thread ioThread=new Thread(new InputCollector(shower));
 		Thread showerThread = new Thread(shower);
 		

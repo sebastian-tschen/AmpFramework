@@ -7,14 +7,14 @@ import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame implements Runnable{
 	
 	private Window window;
 	private TheList list;
 	private int size;
 		
 	public MainFrame(){
-		super("Häupling Falsche Röhre");
+		super("Häuptling Falsche Röhre");
 		size = 5;
 		list = new TheList();
 		
@@ -36,6 +36,10 @@ public class MainFrame extends JFrame {
 	public void setKoords(TheList newList){
 		list = newList;
 		window.setList(list);
+	}
+
+	public void run() {
+		window.repaint();
 	}
 
 }
