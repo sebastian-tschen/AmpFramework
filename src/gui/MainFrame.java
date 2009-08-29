@@ -63,7 +63,6 @@ public class MainFrame extends JFrame implements Runnable{
 		if(size < 2){
 			size = 2;
 		}
-		System.err.println(size);
 	}
 
 }
