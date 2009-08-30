@@ -1,5 +1,6 @@
-package gui;
+package tests;
 
+import gui.MainFrame;
 import container.TheList;
 
 
