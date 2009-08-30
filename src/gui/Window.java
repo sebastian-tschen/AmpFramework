@@ -7,6 +7,8 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 import javax.swing.Box.Filler;
 
+import container.TheList;
+
 public class Window extends JPanel{
 
 	private TheList list;;

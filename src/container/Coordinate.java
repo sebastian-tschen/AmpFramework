@@ -1,5 +1,5 @@
 package container;
-
+@Deprecated
 public class Coordinate {
 
 	@Override

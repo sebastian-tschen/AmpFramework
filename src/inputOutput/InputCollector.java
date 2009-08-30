@@ -1,19 +1,19 @@
 package inputOutput;
 
+import gui.MainFrame;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import container.TubePicture;
-import excpetions.ArraySizeDifferenceException;
-import gui.MainFrame;
-import gui.TheList;
+import container.ListContainer;
+import container.TheList;
 
 public class InputCollector implements Runnable {
 
-	private MainFrame shower;
 	private Object lastPicture;
+	private ListContainer listContainer;
 
 	// private TubeShower tube;
 	//
@@ -21,9 +21,9 @@ public class InputCollector implements Runnable {
 	// this.tube = tube;
 	// }
 
-	public InputCollector(MainFrame shower) {
+	public InputCollector(ListContainer listContainer) {
 
-		this.shower = shower;
+		this.listContainer = listContainer;
 
 	}
 
@@ -74,11 +74,16 @@ public class InputCollector implements Runnable {
 				pic.add(xArray.get(i), yArray.get(i));
 			}
 			
+//TODO checken ob bild dasselbe wie vorher;
 			
-//			if (!pic.equals(this.lastPicture)){
-//				lastPicture=pic;
-				shower.setKoords(pic);
-//			}
+			
+			synchronized (this.listContainer) {
+				listContainer.setNewList(true);
+				listContainer.setList(pic);
+				listContainer.notifyAll();
+			}
+			
+			
 
 		}
 

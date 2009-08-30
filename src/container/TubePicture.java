@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import excpetions.ArraySizeDifferenceException;
-
+@Deprecated
 public class TubePicture implements Iterable<Coordinate> {
 
 	private ArrayList<Integer> yArray;

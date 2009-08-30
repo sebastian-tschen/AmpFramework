@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 
 import container.Coordinate;
 import container.TubePicture;
-
+@Deprecated
 public class TubeShower implements Runnable{
 	
 	private TubeCanvas canvas;
@@ -43,7 +43,7 @@ public class TubeShower implements Runnable{
 			this.canvas.setPicture(pic);
 		}
 	}
-	
+	@Deprecated
 	class TubeCanvas extends Canvas{
 		
 		private TubePicture picture;
