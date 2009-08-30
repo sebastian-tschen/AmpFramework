@@ -1,19 +1,18 @@
 package inputOutput;
 
-import excpetions.ArraySizeDifferenceException;
-import gui.TubeShower;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import container.TubePicture;
+import excpetions.ArraySizeDifferenceException;
+import gui.MainFrame;
+import gui.TheList;
 
 public class InputCollector implements Runnable {
 
-	private TubeShower shower;
+	private MainFrame shower;
 	private Object lastPicture;
 
 	// private TubeShower tube;
@@ -22,7 +21,7 @@ public class InputCollector implements Runnable {
 	// this.tube = tube;
 	// }
 
-	public InputCollector(TubeShower shower) {
+	public InputCollector(MainFrame shower) {
 
 		this.shower = shower;
 
@@ -55,10 +54,10 @@ public class InputCollector implements Runnable {
 			try {
 				for (String string : coords) {
 					if (string != null && !string.equals("")) {
-						xArray.add(Integer.parseInt(string.split(" ")[0]));
+						xArray.add((Integer.parseInt(string.split(" ")[0]))/2);
 						yArray
-								.add(255 - Integer
-										.parseInt(string.split(" ")[1]));
+								.add((255 - Integer
+										.parseInt(string.split(" ")[1]))/2);
 					}
 				}
 
@@ -69,19 +68,17 @@ public class InputCollector implements Runnable {
 				System.err.println(e.getMessage());
 				continue;
 			}
-			TubePicture pic = null;
-			try {
-				pic = new TubePicture(xArray, yArray);
-			} catch (ArraySizeDifferenceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				System.exit(0);
+
+			TheList pic=new TheList();
+			for (int i = 0; i < xArray.size(); i++) {
+				pic.add(xArray.get(i), yArray.get(i));
 			}
 			
-			if (!pic.equals(this.lastPicture)){
-				lastPicture=pic;
-				shower.setPicture(pic);
-			}
+			
+//			if (!pic.equals(this.lastPicture)){
+//				lastPicture=pic;
+				shower.setKoords(pic);
+//			}
 
 		}
 

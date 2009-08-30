@@ -34,6 +34,8 @@ public class TubeShower implements Runnable{
 		
 		mainFrame.setVisible(true);
 		
+		
+		
 	}
 	
 	public void setPicture(TubePicture pic){
@@ -51,7 +53,7 @@ public class TubeShower implements Runnable{
 		public TubeCanvas(TubePicture blank) {
 			this.picture=blank;
 		}
-
+		
 		public void paint(Graphics graphics){
 
 			graphics.setColor(Color.black);
