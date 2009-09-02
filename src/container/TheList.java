@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class TheList {
 	
-	ArrayList<Koord> koords;
-	public int size;
+	private ArrayList<Koord> koords;
+	private int size;
 	
 	public TheList(){
 		koords = new ArrayList<Koord>();

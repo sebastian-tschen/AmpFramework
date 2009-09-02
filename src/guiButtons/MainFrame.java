@@ -19,12 +19,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
-public class MainFrame extends JFrame implements ActionListener{
+public class MainFrame extends JFrame implements ActionListener, Runnable{
 	
 	private BoolPool pool;
 	private JButton one, two , three, four, five, six, seven, eight;
-	JLabel bOne, bTwo, bThree, bFour, bFive, bSix, bSeven, bEight;
-	JLabel countOne, countTwo;
+	private JLabel bOne, bTwo, bThree, bFour, bFive, bSix, bSeven, bEight;
+	private JLabel countOne, countTwo;
 	//char[] bin;
 	private ButtonListener myListener;
 	//private JMenuBar menu;
@@ -60,7 +60,7 @@ public class MainFrame extends JFrame implements ActionListener{
 	}
 
 	private void createUI() {
-		//Kn�pfe
+		//Knoepfe
 		eight = new JButton(new ImageIcon("LED_RED.jpg", "eight"));
 		eight.setActionCommand("eight");
 		eight.setBorderPainted(false);
@@ -121,7 +121,7 @@ public class MainFrame extends JFrame implements ActionListener{
 		panelOne.add(one);
 		
 		//Binaer-Ausgabe
-		JLabel name = new JLabel("Binär:   ");
+		JLabel name = new JLabel("Binaer:   ");
 		panelTwo.add(name);
 		
 		bEight = new JLabel("0");
@@ -314,6 +314,19 @@ public class MainFrame extends JFrame implements ActionListener{
 	}
 	
 	public void setBools(){
-		
+		pool.setBool(cOne, 0);
+		pool.setBool(cTwo, 1);
+		pool.setBool(cThree, 2);
+		pool.setBool(cFour, 3);
+		pool.setBool(cFive, 4);
+		pool.setBool(cSix, 5);
+		pool.setBool(cSeven, 6);
+		pool.setBool(cEight, 7);
+	}
+
+	@Override
+	public void run() {
+		setBools();
+		pool.notifyAll();
 	}
 }
