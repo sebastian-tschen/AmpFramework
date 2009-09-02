@@ -118,8 +118,8 @@ public class MainFrame extends JFrame implements ActionListener{
 		one.addActionListener(this);
 		panelOne.add(one);
 		
-		//Binär-Ausgabe
-		JLabel name = new JLabel("Bin�r:   ");
+		//Binaer-Ausgabe
+		JLabel name = new JLabel("Binär:   ");
 		panelTwo.add(name);
 		
 		bEight = new JLabel("0");
