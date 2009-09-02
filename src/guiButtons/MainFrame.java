@@ -21,6 +21,7 @@ import javax.swing.JToggleButton;
 
 public class MainFrame extends JFrame implements ActionListener{
 	
+	private BoolPool pool;
 	private JButton one, two , three, four, five, six, seven, eight;
 	JLabel bOne, bTwo, bThree, bFour, bFive, bSix, bSeven, bEight;
 	JLabel countOne, countTwo;
@@ -32,8 +33,9 @@ public class MainFrame extends JFrame implements ActionListener{
 	private JPanel panelThree;
 	private boolean cOne, cTwo, cThree, cFour, cFive, cSix, cSeven, cEight;
 
-	public MainFrame(){
+	public MainFrame(BoolPool boolPool){
 		super("Knopf");
+		pool = boolPool;
 		panelOne = new JPanel();
 		panelOne.setBackground(Color.WHITE);
 		panelTwo = new JPanel();
@@ -309,5 +311,9 @@ public class MainFrame extends JFrame implements ActionListener{
 			tempC += tempI;
 			return tempC.toString();
 		}
+	}
+	
+	public void setBools(){
+		
 	}
 }

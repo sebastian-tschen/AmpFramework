@@ -7,7 +7,8 @@ public class start {
 	 */
 	public static void main(String[] args) {
 	
-		MainFrame myFrame = new MainFrame();
+		BoolPool myPool = new BoolPool();
+		MainFrame myFrame = new MainFrame(myPool);
 
 	}
 

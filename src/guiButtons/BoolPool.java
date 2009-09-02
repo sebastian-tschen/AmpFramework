@@ -12,4 +12,8 @@ public class BoolPool {
 		int pos = position -1;
 		bool[pos] = newBool;
 	}
+	
+	public boolean[] getBool(){
+		return bool;
+	}
 }
