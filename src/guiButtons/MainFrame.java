@@ -58,7 +58,7 @@ public class MainFrame extends JFrame implements ActionListener{
 	}
 
 	private void createUI() {
-		//Knöpfe
+		//Knï¿½pfe
 		eight = new JButton(new ImageIcon("LED_RED.jpg", "eight"));
 		eight.setActionCommand("eight");
 		eight.setBorderPainted(false);
@@ -118,8 +118,8 @@ public class MainFrame extends JFrame implements ActionListener{
 		one.addActionListener(this);
 		panelOne.add(one);
 		
-		//Binär-Ausgabe
-		JLabel name = new JLabel("Binär:   ");
+		//BinÃ¤r-Ausgabe
+		JLabel name = new JLabel("Binï¿½r:   ");
 		panelTwo.add(name);
 		
 		bEight = new JLabel("0");
