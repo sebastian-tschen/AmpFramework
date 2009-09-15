@@ -2,6 +2,9 @@ package container;
 
 public class ListContainer {
 	
+
+	private TheList list=null;
+	
 	boolean newList=false;
 	
 	public boolean isNewList() {
@@ -20,7 +23,6 @@ public class ListContainer {
 		this.list = list;
 	}
 
-	TheList list=null;
 	
 
 }
