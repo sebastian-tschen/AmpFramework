@@ -2,7 +2,7 @@ package tests;
 
 import gui.MainFrame;
 import container.TheList;
-
+import container.ListContainer;
 
 
 public class start {
@@ -12,7 +12,7 @@ public class start {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		MainFrame myFrame = new MainFrame();
+		MainFrame myFrame = new MainFrame(new ListContainer());
 		Thread showerThread = new Thread(myFrame);
 		showerThread.start();
 		TheList list = new TheList();
