@@ -39,5 +39,7 @@ public interface PicCommand {
 	 *             if the command is not ready to use in the current form.
 	 */
 	void tryIntegrity() throws CommandIntegrityException;
+	
+	public String getName();
 
 }

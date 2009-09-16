@@ -1,8 +1,12 @@
 package intraController.picArgs;
 
+import java.awt.FlowLayout;
+
 import intraController.InvalidArgumentValueException;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class StringArgument extends PicArgument {
 
@@ -13,11 +17,14 @@ public class StringArgument extends PicArgument {
 	private byte nullByte = 0;
 
 	@Override
-	JPanel getArgumentInputPanal() {
-
-//		hier darfst du froehlich das panel bauen...
-		
-		return null;
+	public JPanel createArgumentInputPanel() {
+		JPanel tempPanel = new JPanel();
+		tempPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		JLabel stringLabel = new JLabel("String: ");
+		tempPanel.add(stringLabel);
+		JTextField stringText = new JTextField(12);
+		tempPanel.add(stringText);
+		return tempPanel;
 	}
 
 	@Override
@@ -26,7 +33,9 @@ public class StringArgument extends PicArgument {
 		// TODO das waere dann hauptsaechlich deins... bitte auch checken ob
 		// alles ascii is und so, und falls irgendwas nicht in ordnung ist, eine
 		// InvalidArgumentValueException schmeissen.
-
+		if(false){
+			throw new InvalidArgumentValueException("Blubb.... dagegen... !!WIEDERSTAND!!");
+		}
 	}
 
 	@Override
@@ -49,7 +58,7 @@ public class StringArgument extends PicArgument {
 
 		byte[] bytes = new byte[string.length() + 1];
 
-		for (int i = 0; i < string.length(); i++) {
+		for (int i = 0; i < string.length()-1; i++) {
 			bytes[i] = charToByte(string.charAt(i));
 		}
 

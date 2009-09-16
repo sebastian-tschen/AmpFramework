@@ -18,7 +18,7 @@ abstract public class PicArgument {
 	 * 
 	 * @return the argument input panal
 	 */
-	abstract JPanel getArgumentInputPanal();
+	public abstract JPanel createArgumentInputPanel();
 
 	/**
 	 * Parses the input from the panel it previously gave. Vielleicht muss man
