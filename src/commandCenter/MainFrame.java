@@ -1,40 +1,36 @@
 package commandCenter;
 
-import java.awt.Component;
+import intraController.PicCommand;
+import intraController.picArgs.PicArgument;
+
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collection;
 
-import intraController.PicCommand;
-import intraController.picArgs.PicArgument;
-
-import javax.swing.ComboBoxEditor;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 public class MainFrame extends JFrame {
 
 	GodsEar listener;
 	JPanel panel;
 	JComboBox combo;
-	ArrayList<PicCommand> commands;
+	Collection<PicCommand> commands;
 	Container cp;
-	
-	public MainFrame(GodsEar newEar, ArrayList<PicCommand> newCommands){
-		panel  = new JPanel();
+
+	public MainFrame(GodsEar newEar, Collection<PicCommand> newCommands) {
+		panel = new JPanel();
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		listener = newEar;
 		commands = newCommands;
 		cp = getContentPane();
-		cp.setLayout(new GridLayout(2,1));
+		cp.setLayout(new GridLayout(2, 1));
 		setBounds(100, 100, 200, 100);
-		
+
 		CreateUI();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,37 +39,45 @@ public class MainFrame extends JFrame {
 
 	private void CreateUI() {
 
-		int size = commands.size() + 1;
-		String[] com = new String[size];
-		com[0] = "";
-		for(int i = 1; i < size; i++){
-			PicCommand temp = commands.get(i-1);
-			com[i] = temp.getName();
-		}
-		combo = new JComboBox(com);
+		// int size = commands.size() + 1;
+		// HashSet<String> com = new HashSet<String>;
+		//		
+		// for(int i = 1; i < size; i++){
+		// PicCommand temp = commands.t.get(i-1);
+		// com[i] = temp.getName();
+		// }
+
+		// ich glaub es is besser wenn man tatsaechlich die objekte in die kombo
+		// box packt... dann is das nachher viel einfacher zu handeln, und man
+		// muss nich von dem string der in der kombo box steht wieder irgendwie
+		// auf das PicCommand objekt kommen. Nur die toString methode muss man
+		// warscheinlich ueberlagern, dass er was nettes anzeigt.
+		combo = new JComboBox(commands.toArray());
 		combo.setEditable(false);
 		combo.addActionListener(listener);
 		panel.add(combo);
 		cp.add(panel);
 	}
-	
-	public void changeFields(){
+
+	public void changeFields() {
+		// hab Strings in die Combo box gepackt... kriegt man ueber item
+		// wieder... alles in allem erheblich einfacher zu handeln denk ich
 		setBounds(100, 100, 200, 100);
-		cp.setLayout(new GridLayout(2,1));
-		int index = combo.getSelectedIndex();
+		cp.setLayout(new GridLayout(2, 1));
+		Object selectedCommand = combo.getSelectedItem();
 		cp.removeAll();
 		cp.add(panel);
-		if(index > 0){
-			PicCommand tempCom = commands.get(index-1);
-			cp.setLayout(new GridLayout(tempCom.getArguments().size()+1,1));
+		if (selectedCommand != null) {
+			PicCommand tempCom = (PicCommand) selectedCommand;
+			cp.setLayout(new GridLayout(tempCom.getArguments().size() + 1, 1));
 			Rectangle bounds = getBounds();
-			int height = bounds.height + (tempCom.getArguments().size()*50);
+			int height = bounds.height + (tempCom.getArguments().size() * 50);
 			setBounds(bounds.x, bounds.y, bounds.width, height);
-			for(PicArgument tempArg : tempCom.getArguments()){
+			for (PicArgument tempArg : tempCom.getArguments()) {
 				cp.add(tempArg.createArgumentInputPanel());
 			}
 		}
-		repaint();			
+		repaint();
 		setVisible(true);
 	}
 

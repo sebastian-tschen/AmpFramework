@@ -8,14 +8,23 @@ import java.util.ArrayList;
 /**
  * The Interface PicCommand.
  */
-public interface PicCommand {
+public abstract class PicCommand {
 
+	
+	private final byte commandByte;
+	private final String name;
+	
+	protected PicCommand(byte commandByte,String name) {
+		this.commandByte=commandByte;
+		this.name=name;
+	}
+	
 	/**
 	 * Gets the arguments.
 	 * 
 	 * @return the arguments
 	 */
-	ArrayList<PicArgument> getArguments();
+	public abstract ArrayList<PicArgument> getArguments();
 
 	/**
 	 * Gets the command in form of an array of byte this is the exact
@@ -27,10 +36,10 @@ public interface PicCommand {
 	 *             if the command is not ready to use in the current form.
 	 * 
 	 */
-	byte[] getByteCodeCommand() throws CommandIntegrityException;
+	public abstract byte[] getByteCodeCommand() throws CommandIntegrityException;
 
 	/**
-	 * checks wether the command is currently in a usable form, hence, all
+	 * checks whether the command is currently in a usable form, hence, all
 	 * necessary arguments are set and the command can be generated. returns if
 	 * everything is ok. please use this befor giving me an command. Or i might
 	 * not be able to send it at all and you won't even know i didn't send it.
@@ -38,8 +47,13 @@ public interface PicCommand {
 	 * @throws CommandIntegrityException
 	 *             if the command is not ready to use in the current form.
 	 */
-	void tryIntegrity() throws CommandIntegrityException;
+	public abstract void tryIntegrity() throws CommandIntegrityException;
 	
-	public String getName();
-
+	public String getName(){
+		return name;
+	}
+	
+	public String toString(){
+		return this.name;
+	}
 }

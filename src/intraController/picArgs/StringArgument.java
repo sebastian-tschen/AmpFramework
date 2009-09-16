@@ -10,6 +10,10 @@ import javax.swing.JTextField;
 
 public class StringArgument extends PicArgument {
 
+	public StringArgument(String name) {
+		super(name,"String");
+	}
+
 	String stringArg;
 	byte[] stringArgBytes = null;
 
@@ -20,7 +24,7 @@ public class StringArgument extends PicArgument {
 	public JPanel createArgumentInputPanel() {
 		JPanel tempPanel = new JPanel();
 		tempPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		JLabel stringLabel = new JLabel("String: ");
+		JLabel stringLabel = new JLabel(this.getName() + " <String>: ");
 		tempPanel.add(stringLabel);
 		JTextField stringText = new JTextField(12);
 		tempPanel.add(stringText);
@@ -28,18 +32,22 @@ public class StringArgument extends PicArgument {
 	}
 
 	@Override
-	void parseInput(Object o) throws InvalidArgumentValueException {
+	public void parseInput(Object o) throws InvalidArgumentValueException {
 
 		// TODO das waere dann hauptsaechlich deins... bitte auch checken ob
 		// alles ascii is und so, und falls irgendwas nicht in ordnung ist, eine
 		// InvalidArgumentValueException schmeissen.
-		if(false){
-			throw new InvalidArgumentValueException("Blubb.... dagegen... !!WIEDERSTAND!!");
+		try {
+			stringArgBytes = stringToArrayOfByte(o.toString());
+		} catch (NumberFormatException e) {
+
+			throw new InvalidArgumentValueException(
+					"This string cannot be converted to ASCII for some reason. Maybe there are non asci characters used in it");
 		}
 	}
 
 	@Override
-	byte[] getArgumentBytes() throws InvalidArgumentValueException {
+	public byte[] getArgumentBytes() throws InvalidArgumentValueException {
 		if (stringArgBytes == null) {
 			throw new InvalidArgumentValueException(
 					"This Argument has not yet been parsed correctly");
@@ -48,7 +56,8 @@ public class StringArgument extends PicArgument {
 		return stringArgBytes;
 	}
 
-	private byte[] stringToArrayOfByte(String string) {
+	private byte[] stringToArrayOfByte(String string)
+			throws NumberFormatException {
 
 		// Das is ganz lustig... ein string is in C immer "nullTerminiert". Das
 		// heisst, dass er (um das ende ueberhaupt erkennen zu koennen) am ende
@@ -58,7 +67,7 @@ public class StringArgument extends PicArgument {
 
 		byte[] bytes = new byte[string.length() + 1];
 
-		for (int i = 0; i < string.length()-1; i++) {
+		for (int i = 0; i < string.length(); i++) {
 			bytes[i] = charToByte(string.charAt(i));
 		}
 
@@ -68,9 +77,14 @@ public class StringArgument extends PicArgument {
 
 	}
 
-	private byte charToByte(char c) {
-		// TODO ka wie das geht grade...
-		return 1;
+	private byte charToByte(char c) throws NumberFormatException {
+		
+//		System.out.println(c);
+		if (c>127){
+			throw new NumberFormatException();
+		}
+		
+		return (byte) c;
 	}
 
 }

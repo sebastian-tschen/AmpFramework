@@ -4,11 +4,27 @@ import intraController.InvalidArgumentValueException;
 
 import javax.swing.JPanel;
 
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class PicArgument.
  */
 abstract public class PicArgument {
+
+	private String name;
+	private String argumentTypeName;
+	
+	
+	public String getName() {
+		return name;
+	}
+
+	protected PicArgument(String name,String argumentTypeName){
+		
+		this.name=name;
+		this.argumentTypeName=argumentTypeName;
+		
+	}
 
 	/**
 	 * Gets the argument input panal which can be placed directly on the window.
@@ -36,7 +52,7 @@ abstract public class PicArgument {
 	 *             char oder eine zahl erwartet, oder aber das feld ganz lehr
 	 *             is)
 	 */
-	abstract void parseInput(Object o) throws InvalidArgumentValueException;
+	public abstract void parseInput(Object o) throws InvalidArgumentValueException;
 
 	/**
 	 * Gets the argument bytes.
@@ -47,6 +63,10 @@ abstract public class PicArgument {
 	 *             when the internal state of this object does not suffice to
 	 *             create the argument (yet?)
 	 */
-	abstract byte[] getArgumentBytes() throws InvalidArgumentValueException;
+	public abstract byte[] getArgumentBytes() throws InvalidArgumentValueException;
+	
+	public String getArgumentTypeName(){
+		return argumentTypeName;
+	}
 
 }

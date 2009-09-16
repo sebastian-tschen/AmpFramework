@@ -5,16 +5,18 @@ import java.util.ArrayList;
 import intraController.*;
 import intraController.picArgs.*;
 
-public class TestCommand implements PicCommand {
+public class TestCommand extends PicCommand {
 
-	private final String name;
 	ArrayList<PicArgument> arguments;
 	
-	public TestCommand(String newName){
-		name = newName;
+	private static TestCommand myInstance=null;
+	
+	private TestCommand(){
+		super((byte) 56,"TestCommand");
 		arguments = new ArrayList<PicArgument>();
-		arguments.add(new StringArgument());
-		arguments.add(new StringArgument());
+		arguments.add(new StringArgument("FirstArg"));
+		arguments.add(new StringArgument("secondArg"));
+		arguments.add(new ByteArgument("third"));
 	}
 
 	@Override
@@ -30,14 +32,16 @@ public class TestCommand implements PicCommand {
 	}
 
 	@Override
-	public String getName() {
-		return name;
-	}
-
-	@Override
 	public void tryIntegrity() throws CommandIntegrityException {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public static TestCommand getInstance(){
+		if (myInstance==null){
+			myInstance = new TestCommand();
+		}
+		return myInstance;
 	}
 
 }
