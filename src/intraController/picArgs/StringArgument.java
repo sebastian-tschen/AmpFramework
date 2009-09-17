@@ -24,7 +24,7 @@ public class StringArgument extends PicArgument {
 	public JPanel createArgumentInputPanel() {
 		JPanel tempPanel = new JPanel();
 		tempPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		JLabel stringLabel = new JLabel(this.getName() + " <String>: ");
+		JLabel stringLabel = new JLabel(this.getName() + " <"+this.getArgumentTypeName()+">: ");
 		tempPanel.add(stringLabel);
 		JTextField stringText = new JTextField(12);
 		tempPanel.add(stringText);
