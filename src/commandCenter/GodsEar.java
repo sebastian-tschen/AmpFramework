@@ -15,8 +15,24 @@ public class GodsEar implements ActionListener {
 	
 	
 	public void actionPerformed(ActionEvent event) {
-		System.out.println(event.getActionCommand());
-		myFrame.changeFields();
+		String command = event.getActionCommand();
+		System.out.println(command);
+	
+		if(command.equals("comboBoxChanged")){
+			myFrame.changeFields();
+		}
+		else{
+			String test = "0010";
+			for(int i = 0; i < test.length(); i++){
+				if(test.charAt(i) == '1'){
+					System.out.println(true);
+				}
+				else{
+					System.out.println(false);
+				}
+			}
+			//myFrame.sendBytes();
+		}
 	}
 
 	public void setFrame(MainFrame newFrame){

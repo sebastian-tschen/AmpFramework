@@ -1,6 +1,7 @@
 package intraController.picArgs;
 
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 
 import intraController.InvalidArgumentValueException;
 
@@ -10,6 +11,8 @@ import javax.swing.JTextField;
 
 public class StringArgument extends PicArgument {
 
+	JTextField stringText;
+	
 	public StringArgument(String name) {
 		super(name,"String");
 	}
@@ -23,10 +26,10 @@ public class StringArgument extends PicArgument {
 	@Override
 	public JPanel createArgumentInputPanel() {
 		JPanel tempPanel = new JPanel();
-		tempPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		tempPanel.setLayout(new GridLayout(2,1));
 		JLabel stringLabel = new JLabel(this.getName() + " <"+this.getArgumentTypeName()+">: ");
 		tempPanel.add(stringLabel);
-		JTextField stringText = new JTextField(12);
+		stringText = new JTextField(10);
 		tempPanel.add(stringText);
 		return tempPanel;
 	}
@@ -37,6 +40,12 @@ public class StringArgument extends PicArgument {
 		// TODO das waere dann hauptsaechlich deins... bitte auch checken ob
 		// alles ascii is und so, und falls irgendwas nicht in ordnung ist, eine
 		// InvalidArgumentValueException schmeissen.
+		System.out.println("String:");
+		System.out.println(stringText.getText());
+		System.out.println("\n");
+		
+		byte[] writtenString = stringText.getText().getBytes();
+		
 		try {
 			stringArgBytes = stringToArrayOfByte(o.toString());
 		} catch (NumberFormatException e) {

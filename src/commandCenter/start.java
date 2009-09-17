@@ -13,6 +13,7 @@ public class start {
 		
 		HashSet<PicCommand> commands = new HashSet<PicCommand>();
 		commands.add(TestCommand.getInstance());
+		commands.add(TestCommand2.getInstance());
 		
 		GodsEar myEar = new GodsEar();
 		MainFrame myFrame = new MainFrame(myEar, commands);

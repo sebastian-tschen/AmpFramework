@@ -5,19 +5,18 @@ import java.util.ArrayList;
 import intraController.*;
 import intraController.picArgs.*;
 
-public class TestCommand extends PicCommand {
+public class TestCommand2 extends PicCommand {
 
 	ArrayList<PicArgument> arguments;
 	
-	private static TestCommand myInstance=null;
+	private static TestCommand2 myInstance=null;
 	
-	private TestCommand(){
-		super((byte) 56,"TestCommand");
+	private TestCommand2(){
+		super((byte) 56,"TestCommand2");
 		arguments = new ArrayList<PicArgument>();
-		arguments.add(new StringArgument("FirstArg"));
+		arguments.add(new ByteArgument("FirstArg"));
 		arguments.add(new StringArgument("secondArg"));
 		arguments.add(new ByteArgument("thirdArg"));
-		arguments.add(new StringArgument("fourthArg"));
 	}
 
 	@Override
@@ -38,9 +37,9 @@ public class TestCommand extends PicCommand {
 		
 	}
 	
-	public static TestCommand getInstance(){
+	public static TestCommand2 getInstance(){
 		if (myInstance==null){
-			myInstance = new TestCommand();
+			myInstance = new TestCommand2();
 		}
 		return myInstance;
 	}

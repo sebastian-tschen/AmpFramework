@@ -32,7 +32,7 @@ abstract public class PicArgument {
 	 * an irgendwas, dass man immer auf das hauptfenster packen kann. Nach
 	 * beduerfnissen auch einfach aendern!
 	 * 
-	 * @return the argument input panal
+	 * @return the argument input panel
 	 */
 	public abstract JPanel createArgumentInputPanel();
 
