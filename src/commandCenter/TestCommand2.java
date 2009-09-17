@@ -26,12 +26,6 @@ public class TestCommand2 extends PicCommand {
 	}
 
 	@Override
-	public byte[] getByteCodeCommand() throws CommandIntegrityException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void tryIntegrity() throws CommandIntegrityException {
 		// TODO Auto-generated method stub
 		

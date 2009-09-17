@@ -52,7 +52,7 @@ abstract public class PicArgument {
 	 *             char oder eine zahl erwartet, oder aber das feld ganz lehr
 	 *             is)
 	 */
-	public abstract void parseInput(Object o) throws InvalidArgumentValueException;
+	public abstract void parseInput() throws InvalidArgumentValueException;
 
 	/**
 	 * Gets the argument bytes.

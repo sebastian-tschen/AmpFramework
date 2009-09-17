@@ -8,6 +8,10 @@ package intraController;
  */
 public class CommandIntegrityException extends Exception {
 
+	public CommandIntegrityException(String string) {
+		super(string);
+	}
+
 	/**
 	 * 
 	 */

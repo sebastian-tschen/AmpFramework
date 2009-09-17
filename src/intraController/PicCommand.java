@@ -10,15 +10,14 @@ import java.util.ArrayList;
  */
 public abstract class PicCommand {
 
-	
 	private final byte commandByte;
 	private final String name;
-	
-	protected PicCommand(byte commandByte,String name) {
-		this.commandByte=commandByte;
-		this.name=name;
+
+	protected PicCommand(byte commandByte, String name) {
+		this.commandByte = commandByte;
+		this.name = name;
 	}
-	
+
 	/**
 	 * Gets the arguments.
 	 * 
@@ -36,7 +35,33 @@ public abstract class PicCommand {
 	 *             if the command is not ready to use in the current form.
 	 * 
 	 */
-	public abstract byte[] getByteCodeCommand() throws CommandIntegrityException;
+	public byte[] getByteCodeCommand() throws CommandIntegrityException {
+
+//		tryIntegrity();
+		
+		ArrayList<Byte> charList = new ArrayList<Byte>();
+
+		for (PicArgument arg : this.getArguments()) {
+			
+			try {
+				arg.parseInput();
+				for (byte c : arg.getArgumentBytes()) {
+					charList.add(c);
+				}
+			} catch (InvalidArgumentValueException e) {
+				throw new CommandIntegrityException(
+						"one of the arguments won't parse: " + e.getMessage());
+			}
+		}
+		byte[] bytes = new byte[charList.size()];
+
+		for (int i = 0; i < bytes.length; i++) {
+			bytes[i] = charList.get(i);
+		}
+
+		return bytes;
+
+	}
 
 	/**
 	 * checks whether the command is currently in a usable form, hence, all
@@ -48,12 +73,12 @@ public abstract class PicCommand {
 	 *             if the command is not ready to use in the current form.
 	 */
 	public abstract void tryIntegrity() throws CommandIntegrityException;
-	
-	public String getName(){
+
+	public String getName() {
 		return name;
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		return this.name;
 	}
 }

@@ -1,9 +1,13 @@
 package commandCenter;
 
-import java.util.ArrayList;
+import intraController.ByteArgument;
+import intraController.CommandIntegrityException;
+import intraController.InvalidArgumentValueException;
+import intraController.PicCommand;
+import intraController.picArgs.PicArgument;
+import intraController.picArgs.StringArgument;
 
-import intraController.*;
-import intraController.picArgs.*;
+import java.util.ArrayList;
 
 public class TestCommand extends PicCommand {
 
@@ -24,12 +28,6 @@ public class TestCommand extends PicCommand {
 	public ArrayList<PicArgument> getArguments() {
 		// TODO Auto-generated method stub
 		return arguments;
-	}
-
-	@Override
-	public byte[] getByteCodeCommand() throws CommandIntegrityException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

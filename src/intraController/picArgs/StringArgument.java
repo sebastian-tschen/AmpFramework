@@ -35,19 +35,15 @@ public class StringArgument extends PicArgument {
 	}
 
 	@Override
-	public void parseInput(Object o) throws InvalidArgumentValueException {
+	public void parseInput() throws InvalidArgumentValueException {
 
 		// TODO das waere dann hauptsaechlich deins... bitte auch checken ob
 		// alles ascii is und so, und falls irgendwas nicht in ordnung ist, eine
 		// InvalidArgumentValueException schmeissen.
-		System.out.println("String:");
-		System.out.println(stringText.getText());
-		System.out.println("\n");
 		
-		byte[] writtenString = stringText.getText().getBytes();
 		
 		try {
-			stringArgBytes = stringToArrayOfByte(o.toString());
+			stringArgBytes = stringToArrayOfByte(stringText.getText());
 		} catch (NumberFormatException e) {
 
 			throw new InvalidArgumentValueException(

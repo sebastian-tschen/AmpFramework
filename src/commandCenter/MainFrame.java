@@ -96,7 +96,8 @@ public class MainFrame extends JFrame {
 		PicCommand tempCom = (PicCommand) selectedCommand;
 		for (PicArgument tempArg : tempCom.getArguments()) {
 			try{
-				tempArg.parseInput(new Object());
+				tempArg.parseInput();
+				System.out.println(tempArg.getArgumentBytes());
 			}
 			catch(InvalidArgumentValueException e){
 				System.out.println("I will ned");
