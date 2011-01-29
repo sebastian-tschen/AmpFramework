@@ -12,8 +12,8 @@ import container.TheList;
 
 public class InputCollector implements Runnable {
 
-	private Object lastPicture;
-	private ListContainer listContainer;
+	Object lastPicture;
+	ListContainer listContainer;
 
 	// private TubeShower tube;
 	//

@@ -40,7 +40,8 @@ public class start {
 		for (int i = 0; i < args.length; i++) {
 
 			try {
-				commArgs.get(i).parseInput(args[i]);
+//				commArgs.get(i).parseInput(args[i]);
+				commArgs.get(i).parseInput();
 				for (byte b : commArgs.get(i).getArgumentBytes()) {
 					char x = new Character((char) new Byte(b).intValue());
 					System.out.print(x);

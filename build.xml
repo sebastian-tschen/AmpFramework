@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<project name="AmpFramework" basedir="." default="all">
+	<target name="init">
+		<property name="appName" value="newProject" />
+
+		<property name="buildDir" value="${basedir}/build" />
+		<property name="libDir" value="${basedir}/lib" />
+		<property name="javaSourceDir" value="${basedir}/src" />
+		<property name="testDir" value="${basedir}/test" />
+		<property name="webSourceDir" value="${basedir}/web" />
+		<property name="etcDir" value="${basedir}/etc" />
+		<property name="tempDir" value="${basedir}/tmp" />
+		<property name="classDir" value="${buildDir}/classes" />
+
+		<!-- This may get overridden when we are called from Anthill. -->
+		<property name="version" value="Local Build" />
+		<property name="deployDir" value="${buildDir}" />
+
+		<property name="distDir" value="${deployDir}/dist" />
+		<property name="junitDir" value="${deployDir}/JUnit" />
+		<property name="javadocDir" value="${deployDir}/apidoc" />
+
+		<!-- Create the directories where we put all the build products. -->
+		<mkdir dir="${buildDir}" />
+		<mkdir dir="${classDir}" />
+		<mkdir dir="${distDir}" />
+		<mkdir dir="${junitDir}" />
+		<mkdir dir="${javadocDir}" />
+
+		<path id="compileClasspath">
+			<fileset dir="${libDir}" />
+		</path>
+		<!-- 
+         Make available build info in such a way that we can display it to the user. 
+        <taskdef name="jreleaseinfo" classname="ch.oscg.jreleaseinfo.anttask.JReleaseInfoAntTask">
+            <classpath refid="compileClasspath"/>
+        </taskdef>
+        <jreleaseinfo className="MyReleaseInfo" packageName="com.johnmunsch.${appName}"
+                targetDir="${javaSourceDir}" project="${appName}" version="${version}" 
+                buildNumFile="buildnum.properties" buildNumProperty="buildnum">
+            <parameter name="VersionNum" type="int" value="1" />
+            <parameter name="RevisionNum" type="Integer" value="0" />
+        </jreleaseinfo>
+    	-->
+	</target>
+
+	<target name="compile" depends="init">
+		<javac srcdir="${javaSourceDir}" destdir="${classDir}" debug="true" deprecation="true">
+			<classpath refid="compileClasspath" />
+		</javac>
+
+		<!-- Copy files needed to run the software to destinations in the 
+         build directory. I do this because I usually pull all binary files like
+         this from inside the Jar files that make up my application rather than
+         having them loose. So they need to be copied to the class dir so they
+         get included in the Jar file for the application. -->
+		<copy todir="${classDir}">
+			<fileset dir="${javaSourceDir}">
+				<include name="**/*.gif" />
+				<include name="**/*.jpg" />
+				<include name="**/*.png" />
+				<include name="**/*.wav" />
+				<include name="**/*.dtd" />
+				<include name="**/*.properties" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="jar" depends="init,compile">
+		<jar jarfile="${distDir}/${appName}.jar" compress="true" basedir="${classDir}">
+			<manifest>
+				<attribute name="Main-Class" value="main.TubeSimulator" />
+			</manifest>
+		</jar>
+	</target>
+	<!--
+    <target name="war" depends="jar">
+        <war destfile="${distDir}/${appName}.war" webxml="${etcDir}/WEB-INF/web.xml">
+            <fileset dir="web"/>
+            <lib dir="${libDir}">
+                <include name="jstl.jar"/>
+                <include name="standard.jar"/>
+            </lib>
+            <lib dir="${libDir}">
+                <include name="*.jar"/>
+            </lib>
+            <lib dir="${distDir}">
+                <include name="${appName}.jar"/>
+            </lib>
+        </war>
+    </target> -->
+
+	<target name="all" depends="jar" description="Build everything.">
+		<echo message="Application built." />
+	</target>
+
+	<target name="javadoc" depends="init" description="Javadoc for the code.">
+		<javadoc packagenames="*" sourcepath="${javaSourceDir}" destdir="${javadocDir}" />
+	</target>
+
+	<target name="clean" depends="init" description="Clean all build products.">
+		<delete dir="${tempDir}" />
+		<delete dir="${javadocDir}" />
+		<delete dir="${junitDir}" />
+		<delete dir="${distDir}" />
+		<delete dir="${classDir}" />
+		<delete dir="${buildDir}" />
+	</target>
+
+	<target name="junit" depends="jar" description="Performs unit tests.">
+		<javac srcdir="test" destdir="${classDir}" debug="true" deprecation="true">
+			<classpath refid="compileClasspath" />
+		</javac>
+
+		<mkdir dir="${tempDir}" />
+
+		<junit failureproperty="junit.failed">
+			<formatter type="xml" />
+			<batchtest todir="${tempDir}">
+				<fileset dir="${classDir}">
+					<include name="**/*Test.class" />
+					<include name="**/Test*.class" />
+				</fileset>
+			</batchtest>
+			<classpath>
+				<path refid="compileClasspath" />
+				<pathelement location="${classDir}" />
+			</classpath>
+		</junit>
+
+		<mkdir dir="${buildDir}/JUnit" />
+
+		<junitreport tofile="TESTS-TestSuites.xml" todir="${tempDir}">
+			<fileset dir="${tempDir}">
+				<include name="TEST-*.xml" />
+			</fileset>
+			<report todir="${junitDir}" />
+		</junitreport>
+
+		<fail message="JUnit test failure." if="junit.failed" />
+	</target>
+</project>

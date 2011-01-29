@@ -249,9 +249,9 @@ public class MainFrame extends JFrame implements ActionListener, Runnable{
 			}
 			else{
 				Integer tempI = first - 10;
-				Character tempC = 'a';
+				char tempC = 'a';
 				tempC += tempI;
-				return tempC.toString();
+				return Character.toString(tempC);
 			}
 		}
 	
