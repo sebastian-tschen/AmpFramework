@@ -19,7 +19,7 @@ public class MainFrame extends JFrame implements Runnable {
 	public MainFrame(ListContainer listContainer){
 		super("Häuptling Falsche Röhre");
 		this.listContainer=listContainer;
-		size = 5;
+		size = 2;
 		list = new TheList();
 
 		createUI();

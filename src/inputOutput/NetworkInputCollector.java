@@ -1,12 +1,7 @@
 package inputOutput;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -18,6 +13,8 @@ import container.TheList;
 public class NetworkInputCollector extends InputCollector {
 
 	private ServerSocket serverSocket;
+//	private long sleeptime=1;
+//	private int counter;
 
 	public NetworkInputCollector(ListContainer listContainer,
 			ServerSocket serverSocket) {
@@ -28,21 +25,19 @@ public class NetworkInputCollector extends InputCollector {
 
 	public void run() {
 
-	
-		while(true){
+		while (true) {
 			runServer();
 		}
-		
+
 	}
 
-	
-	private void runServer(){
+	private void runServer() {
 		InputStream reader = null;
 
 		try {
 			Socket socket = serverSocket.accept();
 
-			reader = new BufferedInputStream(socket.getInputStream());
+			reader = socket.getInputStream();
 			// sender = socket.getOutputStream();
 
 			while (true) {
@@ -54,33 +49,40 @@ public class NetworkInputCollector extends InputCollector {
 
 				try {
 
-					if (reader.read(buff) < 0) {
+					if (saveAndTimedReading(reader,buff) < 0) {
+						socket.close();
 						return;
 					}
 					byte[] eoc = new byte[] { 'e', 'o', 'c' };
 					while (!Arrays.equals(buff, eoc)) {
-//
-//						int x = buff[0];
-//						int y = buff[1];
+						//
+						// int x = buff[0];
+						// int y = buff[1];
 
 						int x = unsignedByteToInt(buff[0]);
 						int y = unsignedByteToInt(buff[1]);
-						 x = x/2;
-						 y=255-y;
-						 y=y/2;
+						x = x / 2;
+						y = 255 - y;
+						y = y / 2;
 
-//						System.out.println("" + buff[0] + " " + buff[1] + " - "
-//								+ x + " " + y);
+						// System.out.println("" + buff[0] + " " + buff[1] +
+						// " - "
+						// + x + " " + y);
 
 						if (buff[2] != ';') {
 							System.err.println("unexpected chunk: " + buff[0]
 									+ buff[1] + buff[2]);
-							return;
+							// socket.close();
+
+							recover(reader);
+
+							continue;
 						}
 
 						xArray.add(x);
 						yArray.add(y);
-						if (reader.read(buff) < 0) {
+						if (saveAndTimedReading(reader, buff)<3){
+							socket.close();
 							return;
 						}
 					}
@@ -96,10 +98,12 @@ public class NetworkInputCollector extends InputCollector {
 						listContainer.setNewList(true);
 						listContainer.setList(pic);
 						listContainer.notifyAll();
+//						System.out.println(counter);
 					}
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					socket.close();
 					return;
 				}
 
@@ -111,8 +115,48 @@ public class NetworkInputCollector extends InputCollector {
 		}
 
 	}
-	
+
+	private void recover(InputStream reader) throws IOException {
+
+		byte buff[] = new byte[3];
+		byte[] eoc = new byte[] { 'e', 'o', 'c' };
+		while (!Arrays.equals(buff, eoc)) {
+
+			buff[0] = buff[1];
+			buff[1] = buff[2];
+			buff[2] = (byte) reader.read();
+
+		}
+
+	}
+
 	private int unsignedByteToInt(byte b) {
 		return (int) b & 0xFF;
+	}
+	
+	private int saveAndTimedReading(InputStream reader,byte[] buff) throws IOException{
+	
+		int max = buff.length;
+		int n = 0;
+		while (n < max) {
+
+			int x = reader.read(buff, n, max - n);
+
+			if (x < 0) {
+				System.out.println("error reading from stream");
+				return x;
+			}
+
+			if (x == 0) {
+
+				System.out.println("EOF");
+				return x;
+			}
+
+			n += x;
+
+		}
+		
+		return n;
 	}
 }
