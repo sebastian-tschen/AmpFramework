@@ -143,7 +143,7 @@ public class NetworkInputCollector extends InputCollector {
 			int x = reader.read(buff, n, max - n);
 
 			if (x < 0) {
-				System.out.println("error reading from stream");
+				System.err.println("error reading from stream");
 				return x;
 			}
 

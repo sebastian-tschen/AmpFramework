@@ -7,6 +7,8 @@ import inputOutput.NetworkInputCollector;
 import java.io.IOException;
 import java.net.ServerSocket;
 
+import pinSimulator.PinSimulator;
+
 import container.ListContainer;
 
 public class TubeSimulator {
@@ -25,6 +27,11 @@ public class TubeSimulator {
 		Thread ioThread=new Thread(new NetworkInputCollector(container,socket));
 		ioThread.setName("I/O Thread");
 		
+		PinSimulator pin = new PinSimulator();
+		Thread pinThread = new Thread(pin);
+		pinThread.setName("Pin Thread");
+		
+		pinThread.start();
 		ioThread.start();
 		showerThread.start();
 		
